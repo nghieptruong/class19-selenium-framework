@@ -1,15 +1,14 @@
 package testcases;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.HomePage;
+import pages.LoginPage;
 
 import java.time.Duration;
 
@@ -24,38 +23,30 @@ public class TC02_Login {
         options.setExperimentalOption("useAutomationExtension", false);
         WebDriver chromeDriver = new ChromeDriver(options);
 
-        //khai bao explicit wait
-//        WebDriverWait wait = new WebDriverWait(chromeDriver, Duration.ofSeconds(10));
-        FluentWait<WebDriver> wait = new FluentWait<>(chromeDriver);
-        wait.pollingEvery(Duration.ofSeconds(1));
-        wait.withTimeout(Duration.ofSeconds(10));
-        wait.ignoring(NotFoundException.class);
-
         chromeDriver.manage().window().maximize(); // maximize browser
-        chromeDriver.get("https://demo1.cybersoft.edu.vn/sign-in");
+        chromeDriver.get("https://demo1.cybersoft.edu.vn");
 
         String account = "50a4dea9-1f49-4d51-8df7-8058ab3eea39";
+        String password = "123456";
+
+        HomePage homePage = new HomePage(chromeDriver);
+        LoginPage loginPage = new LoginPage(chromeDriver);
+
+        //Pre-condition: User is at Login page (navigate to Login page)
+        homePage.getTopNavigationBar().navigateToLoginPage();
 
         //Step 1. Enter user login
-        By byTxtUserLogin = By.id("taiKhoan");
-        WebElement txtUserLogin = wait.until(ExpectedConditions.visibilityOfElementLocated(byTxtUserLogin));
-        txtUserLogin.sendKeys(account);
+        loginPage.enterAccount(account);
 
         //Step 2. Enter password login
-        By byTxtPasswordLogin = By.id("matKhau");
-        WebElement txtPasswordLogin = wait.until(ExpectedConditions.visibilityOfElementLocated(byTxtPasswordLogin));
-        txtPasswordLogin.sendKeys("123456");
+        loginPage.enterPassword(password);
 
         //Step 3. Click 'Dang Nhap'
-        By byBtnLogin = By.xpath("//button[span[text()='Đăng nhập']]");
-        WebElement btnLogin = wait.until(ExpectedConditions.elementToBeClickable(byBtnLogin));
-        btnLogin.click();
+        loginPage.clickLogin();
 
         //Step 4: Verify login successfully
         //VP: Verify 'Dang nhap thanh cong' message displays
-        By byLblLoginSuccess = By.id("swal2-title");
-        WebElement lblLoginSuccess = wait.until(ExpectedConditions.visibilityOfElementLocated(byLblLoginSuccess));
-        String actualLoginMsg = lblLoginSuccess.getText();
+        String actualLoginMsg = loginPage.getSuccessMessage();
         Assert.assertEquals(actualLoginMsg, "Đăng nhập thành công", "Login Successful Message");
 
         //VP: User displays on the top right
