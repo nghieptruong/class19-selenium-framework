@@ -2,11 +2,6 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class LoginPage extends CommonPage {
 
@@ -28,27 +23,19 @@ public class LoginPage extends CommonPage {
 
     //Phuong thuc (method)
     public void enterAccount(String account) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement txtUserLogin = wait.until(ExpectedConditions.visibilityOfElementLocated(byTxtUserLogin));
-        txtUserLogin.sendKeys(account);
+        sendKeys(byTxtUserLogin, account);
     }
 
     public void enterPassword(String password) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement txtPasswordLogin = wait.until(ExpectedConditions.visibilityOfElementLocated(byTxtPasswordLogin));
-        txtPasswordLogin.sendKeys(password);
+        sendKeys(byTxtPasswordLogin, password);
     }
 
     public void clickLogin() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement btnLogin = wait.until(ExpectedConditions.elementToBeClickable(byBtnLogin));
-        btnLogin.click();
+        click(byBtnLogin);
     }
 
     public String getSuccessMessage() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement lblLoginSuccess = wait.until(ExpectedConditions.visibilityOfElementLocated(byLblLoginSuccess));
-        String actualLoginMsg = lblLoginSuccess.getText();
+        String actualLoginMsg = getText(byLblLoginSuccess);
         return actualLoginMsg;
     }
 

@@ -35,6 +35,15 @@ public class BasePage {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
+    public boolean waitInvisibilityOfElemementLocated(By locator, long timeout) {
+        WebDriverWait wait = getWebDriverWait(timeout);
+        return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
+    public boolean waitInvisibilityOfElemementLocated(By locator) {
+        return waitInvisibilityOfElemementLocated(locator, ConstantTimeout.DEFAULT_TIMEOUT);
+    }
+
     public WebElement waitClickable(By locator) {
         return waitClickable(locator, ConstantTimeout.DEFAULT_TIMEOUT);
     }
@@ -55,5 +64,14 @@ public class BasePage {
 
     public void click(By locator) {
         click(locator, ConstantTimeout.DEFAULT_TIMEOUT);
+    }
+
+    public String getText(By locator, long timeout) {
+        WebElement element = waitVisibilityOfElementLocated(locator, timeout);
+        return element.getText();
+    }
+
+    public String getText(By locator) {
+        return getText(locator, ConstantTimeout.DEFAULT_TIMEOUT);
     }
 }

@@ -6,6 +6,7 @@ build/
 .kotlin
 
 test-output/
+extentreport-output/
 
 ### IntelliJ IDEA ###
 .idea/

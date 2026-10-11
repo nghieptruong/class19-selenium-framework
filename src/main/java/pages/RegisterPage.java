@@ -2,11 +2,6 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class RegisterPage extends CommonPage {
 
@@ -32,50 +27,35 @@ public class RegisterPage extends CommonPage {
     }
 
     public void enterAccount(String account) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement accountTextbox = wait.until(ExpectedConditions.visibilityOfElementLocated(byAccountTextbox));
-        accountTextbox.sendKeys(account);
+        sendKeys(byAccountTextbox, account);
     }
 
     public void enterPassword(String password) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement passwordTextbox = wait.until(ExpectedConditions.visibilityOfElementLocated(byTxtPassword));
-        passwordTextbox.sendKeys(password);
+        sendKeys(byTxtPassword, password);
     }
 
     public void enterConfirmPassword(String password) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement confirmPasswordTextbox = wait.until(ExpectedConditions.visibilityOfElementLocated(byTxtConfirmPassword));
-        confirmPasswordTextbox.sendKeys(password);
+        sendKeys(byTxtConfirmPassword, password);
     }
 
     public void enterFullName(String fullName) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement fullnameTextbox = wait.until(ExpectedConditions.visibilityOfElementLocated(byTxtFullname));
-        fullnameTextbox.sendKeys(fullName);
+        sendKeys(byTxtFullname, fullName);
     }
 
     public void enterEmail(String email) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement emailTextbox = wait.until(ExpectedConditions.visibilityOfElementLocated(byTxtEmail));
-        emailTextbox.sendKeys(email);
+        sendKeys(byTxtEmail, email);
     }
 
     public void clickRegister() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement btnRegister = wait.until(ExpectedConditions.visibilityOfElementLocated(byBtnRegister));
-        btnRegister.click();
+        click(byBtnRegister);
     }
 
     public String getSuccessMessage() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement lblLoginSuccess = wait.until(ExpectedConditions.visibilityOfElementLocated(byLblRegisterSuccess));
-        String actualLoginMsg = lblLoginSuccess.getText();
+        String actualLoginMsg = getText(byLblRegisterSuccess);
         return actualLoginMsg;
     }
 
     public void waitDialogDisappear() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(byLblRegisterSuccess));
+        waitInvisibilityOfElemementLocated(byLblRegisterSuccess);
     }
 }

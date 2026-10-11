@@ -1,36 +1,26 @@
 package testcases;
 
-import org.openqa.selenium.NotFoundException;
+import base.BaseTest;
+import drivers.DriverManager;
+import drivers.DriverManagerFactory;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginPage;
 
-import java.time.Duration;
-
-public class TC02_Login {
+public class TC02_Login extends BaseTest {
 
     @Test
     public void TC02_Verify_Login_Successfully() {
 
-        ChromeOptions options = new ChromeOptions();
-        //Tat hien thi automation bar
-        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-        options.setExperimentalOption("useAutomationExtension", false);
-        WebDriver chromeDriver = new ChromeDriver(options);
-
-        chromeDriver.manage().window().maximize(); // maximize browser
-        chromeDriver.get("https://demo1.cybersoft.edu.vn");
+        driver.get("https://demo1.cybersoft.edu.vn");
 
         String account = "50a4dea9-1f49-4d51-8df7-8058ab3eea39";
         String password = "123456";
 
-        HomePage homePage = new HomePage(chromeDriver);
-        LoginPage loginPage = new LoginPage(chromeDriver);
+        HomePage homePage = new HomePage(driver);
+        LoginPage loginPage = new LoginPage(driver);
 
         //Pre-condition: User is at Login page (navigate to Login page)
         homePage.getTopNavigationBar().navigateToLoginPage();
@@ -51,8 +41,6 @@ public class TC02_Login {
 
         //VP: User displays on the top right
 
-        //Close browser & kill process chromedriver
-        chromeDriver.quit();
 
     }
 
